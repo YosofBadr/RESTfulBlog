@@ -3,12 +3,13 @@ var express = require("express"),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser");
 
-mongoose.connect("mongodb://localhost:27017/restfulblog", { useNewUrlParser: true, useUnifiedTopology: true }); 
-
+// App configuration
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Mongoose Configuration
+mongoose.connect("mongodb://localhost:27017/restfulblog", { useNewUrlParser: true, useUnifiedTopology: true }); 
 
 var blogSchema = new mongoose.Schema({
   title: String,
@@ -19,6 +20,17 @@ var blogSchema = new mongoose.Schema({
 
 var Blog = mongoose.model("Blog", blogSchema);
 
+// RESTful Routes
+
+// Index Route - Displays all blogs
+app.get("/blogs", function(request, response){
+  Blog.find({}, function(error, blogs){
+    if(error)
+      console.log("Error has occured: " + error);
+    else
+      response.render("index", {blogs: blogs});
+  });
+});
 
 app.listen("3000", function(){ 
   console.log("Blog is listening on port 3000");
