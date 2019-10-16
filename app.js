@@ -42,6 +42,16 @@ app.get("/blogs/new", function(request, response){
   response.render("new");
 });
 
+// Create Route - Create a new blog post
+app.post("/blogs", function(request, response) {
+  Blog.create(request.body.blog, function(error, createdBlog){
+    if(error)
+      console.log("An error has occured " + error);
+    else
+      response.redirect("/blogs");
+  });
+});
+
 app.listen("3000", function(){ 
   console.log("Blog is listening on port 3000");
 });
