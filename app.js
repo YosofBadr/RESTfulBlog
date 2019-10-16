@@ -22,6 +22,11 @@ var Blog = mongoose.model("Blog", blogSchema);
 
 // RESTful Routes
 
+// Root Route - Redirects to index route
+app.get("/", function(request, response){
+  response.redirect("/blogs");
+});
+
 // Index Route - Displays all blogs
 app.get("/blogs", function(request, response){
   Blog.find({}, function(error, blogs){
