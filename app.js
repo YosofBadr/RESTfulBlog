@@ -37,6 +37,11 @@ app.get("/blogs", function(request, response){
   });
 });
 
+// New Route - Displays a form to create a new blog
+app.get("/blogs/new", function(request, response){
+  response.render("new");
+});
+
 app.listen("3000", function(){ 
   console.log("Blog is listening on port 3000");
 });
