@@ -52,6 +52,16 @@ app.post("/blogs", function(request, response) {
   });
 });
 
+// Show Route - Displays detailed information about a specific blog
+app.get("/blogs/:id", function(request, response) {
+  Blog.findById(request.params.id, function (error, foundBlog){
+    if(error)
+      console.log("An error has occured: " + error);
+    else
+      response.render("show", {blog: foundBlog});
+    });  
+});
+
 app.listen("3000", function(){ 
   console.log("Blog is listening on port 3000");
 });
