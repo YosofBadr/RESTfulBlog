@@ -48,6 +48,8 @@ app.get("/blogs/new", function(request, response){
 
 // Create Route - Create a new blog post
 app.post("/blogs", function(request, response) {
+  request.body.blog.body = request.sanitize(request.body.blog.body);
+
   Blog.create(request.body.blog, function(error, createdBlog){
     if(error)
       console.log("An error has occured " + error);
@@ -78,6 +80,7 @@ app.get("/blogs/:id/edit", function(request, response){
 
 // Update Route - Update a blog using information from the edit page
 app.put("/blogs/:id", function(request, response){
+  request.body.blog.body = request.sanitize(request.body.blog.body);
   Blog.findByIdAndUpdate(request.params.id, request.body.blog, function(error, updatedBlog){
     if(error)
       console.log("An error has occured: " + error);
