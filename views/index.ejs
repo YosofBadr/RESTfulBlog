@@ -4,6 +4,7 @@
     <h1> <%= blogs[i].title %> </h1>
     <img src=" <%= blogs[i].image %> ">
     <p> <%= blogs[i].body %> </p>
+    <a href="/blogs/<%= blogs[i]._id %>"> Read More </a>
   <% } %>
 
 <% include ./partials/footer %>
