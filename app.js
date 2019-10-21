@@ -62,6 +62,16 @@ app.get("/blogs/:id", function(request, response) {
     });  
 });
 
+// Edit Route - Allows us to editing exisiting blog posts
+app.get("/blogs/:id/edit", function(request, response){
+  Blog.findById(request.params.id, function (error, foundBlog){
+    if(error)
+      console.log("An error has occured: " + error);
+    else
+      response.render("edit", {blog: foundBlog});
+    });  
+});
+
 app.listen("3000", function(){ 
   console.log("Blog is listening on port 3000");
 });
