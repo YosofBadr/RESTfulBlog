@@ -1,6 +1,7 @@
 var express = require("express"),
     app = express(),
     methodOverride = require("method-override"),
+    espressSanitizer = require("express-sanitizer"),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser");
 
@@ -9,6 +10,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+app.use(espressSanitizer());
 
 // Mongoose Configuration
 mongoose.connect("mongodb://localhost:27017/restfulblog", { useNewUrlParser: true, useUnifiedTopology: true }); 
