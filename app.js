@@ -84,6 +84,16 @@ app.put("/blogs/:id", function(request, response){
   });
 });
 
+// Destroy Route - Deletes a blog
+app.delete("/blogs/:id", function(request, response){
+  Blog.findByIdAndRemove(request.params.id, function(error){
+    if(error)
+      console.log("An error has occured: " + error);
+    else
+      response.redirect("/blogs");
+  });
+});
+
 app.listen("3000", function(){ 
   console.log("Blog is listening on port 3000");
 });
