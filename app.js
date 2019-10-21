@@ -1,5 +1,6 @@
 var express = require("express"),
     app = express(),
+    methodOverride = require("method-override"),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser");
 
@@ -7,6 +8,7 @@ var express = require("express"),
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 
 // Mongoose Configuration
 mongoose.connect("mongodb://localhost:27017/restfulblog", { useNewUrlParser: true, useUnifiedTopology: true }); 
@@ -70,6 +72,16 @@ app.get("/blogs/:id/edit", function(request, response){
     else
       response.render("edit", {blog: foundBlog});
     });  
+});
+
+// Update Route - Update a blog using information from the edit page
+app.put("/blogs/:id", function(request, response){
+  Blog.findByIdAndUpdate(request.params.id, request.body.blog, function(error, updatedBlog){
+    if(error)
+      console.log("An error has occured: " + error);
+    else
+      response.redirect("/blogs/" + request.params.id);
+  });
 });
 
 app.listen("3000", function(){ 
